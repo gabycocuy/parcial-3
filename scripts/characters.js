@@ -1,76 +1,140 @@
-class Personaje {
-    constructor(id,nombre,imagen,descripcion,archivo){
-        this.id = id;
-        this.nombre = nombre;
-        this.imagen = imagen;
-        this.descripcion = descripcion;
-    }
-}
+let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+let usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo')) || null;
 
-const Personajes =[
-new Personaje(1,"Batman","recursos/batman.jpeg","El Caballero de la Noche"),
-new Personaje(2,"Joker","recursos/joker.png","El Príncipe Payaso del Crimen"),
-new Personaje(3,"Penguin", "recursos/The Penguin.jpeg", "Mafioso clásico de Gotham."),
-new Personaje(4,"Catwoman", "recursos/gatubela.jpeg", "Ladrona con moral ambigua."),
-new Personaje(5,"Harley Quinn", "recursos/♥️💙.jpeg", "Psiquiatra convertida en villana."),
-new Personaje(6, "Robin", "recursos/robin.jpeg", "El joven maravilla."),
-new Personaje(7, "Alfred", "recursos/alfrec.jpeg", "El mayordomo leal."),
-new Personaje(8,"James Gordon", "recursos/James Gordon.jpeg", "Comisario aliado de Batman."),
-new Personaje(9,"bane","recursos/bane.jpeg", "Fuerza bruta e inteligencia."),
-new Personaje(10,"Riddler", "recursos/riddle.jpeg", "El hombre de los acertijos."),
-new Personaje(11,"Two-Face", "recursos/two-face.jpeg", "El ex fiscal de distrito."),
-new Personaje(12,"Scarecrow", "recursos/Scarecrow_.jpeg", "El Maestro del miedo."),
-new Personaje(13, "Lucius Fox", "recursos/lucius fox.jpeg", "Ingeniero brillante."),
-new Personaje(14, "Batgirl", "recursos/batgirl.jpeg", "La aliada encapuchada."),
-new Personaje(15, "Ra's al Ghul", "recursos/ra's al ghul.jpeg", "Líder de la Liga de Asesinos."),
-
+const personajes = [
+  {
+    id: 1,
+    nombre: "Batman",
+    descripcion: "El Caballero de la Noche, protector de Gotham.",
+    imagen: "assets/batman.jpg"
+  },
+  {
+    id: 2,
+    nombre: "Joker",
+    descripcion: "El archienemigo de Batman, símbolo del caos.",
+    imagen: "assets/joker.jpg"
+  },
+  {
+    id: 3,
+    nombre: "Robin",
+    descripcion: "El fiel compañero de Batman en su lucha contra el crimen.",
+    imagen: "assets/robin.jpg"
+  }
 ];
 
-// Detecta en qué página estás
-const esDetalle = window.location.pathname.includes("detalle.html");
+if (usuarioActivo) {
+  document.getElementById('nombre').value = usuarioActivo.nombre;
+  document.getElementById('correo').value = usuarioActivo.correo;
+  document.getElementById('contrasena').value = usuarioActivo.contrasena;
 
-// Si estás en characters.html
-function mostrarPersonajes() {
-    const contenedor = document.querySelector(".carrusel");
-    if (!contenedor) return;
-
-    Personajes.forEach(p => {
-        const div = document.createElement("div");
-        div.classList.add("slide");
-
-        div.innerHTML = `
-            <a href="detalle.html?id=${p.id}">
-                <img src="${p.imagen}" alt="${p.nombre}" title="${p.nombre}">
-            </a>
-        `;
-
-        contenedor.appendChild(div);
-    });
+  renderizarFavoritos();
 }
 
-// Si estás en detalle.html
-function mostrarDetalle() {
-    const params = new URLSearchParams(window.location.search);
-    const id = parseInt(params.get("id"));
-    const personaje = Personajes.find(p => p.id === id);
+document.getElementById('formPerfil').addEventListener('submit', function (e) {
+  e.preventDefault();
 
-    const contenedor = document.querySelector("#detalle-personaje");
-    if (!contenedor || !personaje) return;
+  const nuevoNombre = document.getElementById('nombre').value;
+  const nuevoCorreo = document.getElementById('correo').value;
+  const nuevaContrasena = document.getElementById('contrasena').value;
 
-    contenedor.innerHTML = `
-        <div class="detalle">
-            <img src="${personaje.imagen}" alt="${personaje.nombre}">
-            <h2>${personaje.nombre}</h2>
-            <p>${personaje.descripcion}</p>
-            <a href="characters.html">← Volver</a>
-        </div>
-    `;
-}
+  const correoEnUso = usuarios.some(
+    (usuario) => usuario.correo === nuevoCorreo && usuario.correo !== usuarioActivo.correo
+  );
 
-window.addEventListener("DOMContentLoaded", () => {
-    if (esDetalle) {
-        mostrarDetalle();
-    } else {
-        mostrarPersonajes();
-    }
+  if (correoEnUso) {
+    mostrarMensaje('Este correo ya está en uso por otro usuario.', 'red');
+    return;
+  }
+
+  usuarioActivo.nombre = nuevoNombre;
+  usuarioActivo.correo = nuevoCorreo;
+  usuarioActivo.contrasena = nuevaContrasena;
+
+  const index = usuarios.findIndex(usuario => usuario.correo === usuarioActivo.correo);
+  if (index !== -1) {
+    usuarios[index] = usuarioActivo;
+  } else {
+    usuarios.push(usuarioActivo);
+  }
+
+  localStorage.setItem('usuarios', JSON.stringify(usuarios));
+  localStorage.setItem('usuarioActivo', JSON.stringify(usuarioActivo));
+
+  mostrarMensaje('Perfil actualizado correctamente.', 'green');
 });
+
+function mostrarMensaje(mensaje, color) {
+  const mensajeElemento = document.getElementById('mensaje');
+  mensajeElemento.textContent = mensaje;
+  mensajeElemento.style.color = color;
+}
+
+function toggleFavorito(id) {
+  if (!usuarioActivo.favoritos) {
+    usuarioActivo.favoritos = [];
+  }
+
+  const index = usuarioActivo.favoritos.indexOf(id);
+  if (index === -1) {
+    usuarioActivo.favoritos.push(id);
+  } else {
+    usuarioActivo.favoritos.splice(index, 1);
+  }
+
+  localStorage.setItem('usuarioActivo', JSON.stringify(usuarioActivo));
+  renderizarFavoritos();
+  renderizarPersonajes(); 
+}
+
+function renderizarPersonajes() {
+  const contenedor = document.getElementById("personajesContainer");
+  if (!contenedor) return;
+
+  contenedor.innerHTML = "";
+
+  personajes.forEach(personaje => {
+    const esFavorito = usuarioActivo.favoritos?.includes(personaje.id);
+
+    const card = document.createElement("div");
+    card.classList.add("favorito-card");
+    card.innerHTML = `
+      <h3>${personaje.nombre}</h3>
+      <img src="${personaje.imagen}" alt="${personaje.nombre}" style="max-width:100px; cursor: pointer;" onclick="irADetalle(${personaje.id})">
+      <p>${personaje.descripcion}</p>
+      <button onclick="toggleFavorito(${personaje.id})">
+        ${esFavorito ? '💛 Quitar de favoritos' : '🤍 Agregar a favoritos'}
+      </button>
+    `;
+    contenedor.appendChild(card);
+  });
+}
+
+function renderizarFavoritos() {
+  const contenedor = document.getElementById("favoritosContainer");
+  if (!contenedor) return;
+
+  contenedor.innerHTML = "<h2>Mis Favoritos</h2>";
+
+  const favoritos = personajes.filter(p => usuarioActivo.favoritos?.includes(p.id));
+  if (favoritos.length === 0) {
+    contenedor.innerHTML += "<p>No tienes personajes favoritos aún.</p>";
+    return;
+  }
+
+  favoritos.forEach(personaje => {
+    const card = document.createElement("div");
+    card.classList.add("favorito-card");
+    card.innerHTML = `
+      <h3>${personaje.nombre}</h3>
+      <img src="${personaje.imagen}" alt="${personaje.nombre}" style="max-width:100px;">
+      <p>${personaje.descripcion}</p>
+    `;
+    contenedor.appendChild(card);
+  });
+}
+function irADetalle(id) {
+  localStorage.setItem("personajeDetalleId", id);
+  window.location.href = "detalle.html";
+}
+
+renderizarPersonajes();
