@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="styles/login.css"/>
+  <link rel="stylesheet" href="styles/register.css"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -29,17 +29,23 @@
   </header>
 
   
-   <div class="form-container">
-        <h1>Login</h1>
-        <form id="loginForm">
-            <input type="email" id="email" placeholder="Escribe tu Email" required autofocus>
-            <input type="password" id="password" placeholder="Escribe tu contraseña" required>
-            <a href="profile.html"><button type="submit">Ingresar</button></a>
+  <main class="main-content">
+    <div class="form-wrapper">
+      <img src="recursos/OIP 1.png" alt="Avatar Batman" class="avatar">
+      
+      <div class="form-container">
+        <h1>Registro</h1>
+        <form id="registroForm">
+          <input type="text" id="nombre" placeholder="Escribe tu Nombre" autofocus required>
+          <input type="text" id="apellido" placeholder="Escribe tu Apellido" required>
+          <input type="email" id="email" placeholder="Escribe tu Email" required>
+          <input type="password" id="password" placeholder="Escribe tu Clave" required>
+          <button type="submit">¡Regístrate YA!</button>
         </form>
-        <br>
-        <p>¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
+        <p>¿Ya tienes una Cuenta? <a href="login.html">Ingresar</a></p>
+      </div>
     </div>
+  </main>
 
-  <script src="scripts/login.js"></script>
+  <script src="scripts/register.js"></script>
 </body>
-</html>
