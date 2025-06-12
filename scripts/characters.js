@@ -97,14 +97,14 @@ function renderizarPersonajes() {
 
     const card = document.createElement("div");
     card.classList.add("favorito-card");
-    card.innerHTML = `
-      <h3>${personaje.nombre}</h3>
-      <img src="${personaje.imagen}" alt="${personaje.nombre}" style="max-width:100px; cursor: pointer;" onclick="irADetalle(${personaje.id})">
-      <p>${personaje.descripcion}</p>
-      <button onclick="toggleFavorito(${personaje.id})">
-        ${esFavorito ? '💛 Quitar de favoritos' : '🤍 Agregar a favoritos'}
-      </button>
-    `;
+   card.innerHTML = `
+  <h3>${personaje.nombre}</h3>
+  <img src="${personaje.imagen}" alt="${personaje.nombre}" style="max-width:100px; cursor: pointer;" onclick="irADetalle(${personaje.id})">
+  <p>${personaje.descripcion}</p>
+  <button onclick="toggleFavorito(${personaje.id})">
+    ${esFavorito ? '💛 Quitar de favoritos' : '🤍 Agregar a favoritos'}
+  </button>
+`;
     contenedor.appendChild(card);
   });
 }
