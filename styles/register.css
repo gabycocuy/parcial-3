@@ -11,7 +11,6 @@ body {
   color: white;
 }
 
-/* -------- NAVBAR -------- */
 header {
   width: 100%;
   padding: 20px 0;
@@ -80,16 +79,14 @@ a:hover {
   color: white;
 }
 
-/* -------- CONTENEDOR CENTRAL -------- */
 .main-content {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding-top: 100px; /* para que no se tape con la navbar */
+  padding-top: 100px; 
 }
 
-/* -------- FORMULARIO Y AVATAR -------- */
 .form-wrapper {
   display: flex;
   gap: 40px;

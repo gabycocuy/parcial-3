@@ -26,6 +26,7 @@ function ingresarUsuario(e){
     }
 
     localStorage.setItem("logueado", JSON.stringify(usuarioLogueado))
-    window.location.href = "index.html"
+    window.location.href = "profile.html";
 }
-loginForm.addEventListener("submit", ingresarUsuario)
+loginForm.addEventListener("submit", ingresarUsuario);
+
