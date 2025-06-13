@@ -143,3 +143,16 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+::-webkit-scrollbar{
+    width:auto;
+}
+
+::-webkit-scrollbar-track{
+    background: rgb(0, 0, 0);
+}
+::-webkit-scrollbar-thumb{
+    background:#FFD700;
+    border-radius: 15px;
+    border:#ffd900b2;
+}

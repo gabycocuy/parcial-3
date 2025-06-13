@@ -1,73 +1,61 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-body{
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to right, black, #FFEE00);
-    font-family: "Albert Sans", Arial, Helvetica, sans-serif, "bangers";
-    color: white;
+
+body {
+  background: linear-gradient(to right, black, #FFEE00);
+  font-family: "Albert Sans", Arial, Helvetica, sans-serif;
+  color: white;
 }
-header{
-    width: 100%;
-    padding: 20px;
+
+header {
+  width: 100%;
+  padding: 20px;
 }
-nav{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-    margin: 0 auto;
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
 }
-.logo img{
-    width: 100px;
+
+.logo img {
+  width: 100px;
 }
-ul{
-    list-style: none;
-    display: flex;
-    gap: 30px;
+
+ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
 }
+
 ul li a {
-    text-decoration: none;
-    color: white;
-    font-size: 20px;
-    padding: 5px 10px;
-    transition: 0.3s;
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  padding: 5px 10px;
+  transition: 0.3s;
 }
 
 a:hover {
-    background-color: #cabe17;
-    padding: 10px;
-    border-radius: 10px;
+  background-color: #cabe17;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 ul li a.active {
-    border-bottom: 2px solid yellow;
-}
-nav ul li a::after {
-    content: '';
-    display: block;
-    height: 2px;
-    width: 100%;
-    background: yellow;
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    transform: scaleX(0);
-    transition: transform 0.3s;
+  border-bottom: 2px solid yellow;
 }
 
-nav ul li a:hover::after {
-    transform: scaleX(1);
+.profile-icon i {
+  width: 40px;
+  border-radius: 50%;
+  color: white;
 }
-.profile-icon i{
-    width: 40px;
-    border-radius: 50%;
-    color: white;
-}
-
 
 .personaje-detalle {
   display: flex;
@@ -88,11 +76,32 @@ nav ul li a:hover::after {
 
 .personaje-info h1 {
   font-size: 2.8em;
-  font-family: 'Comic Neue', cursive;
+  font-family: 'Bangers', cursive;
   margin-bottom: 20px;
 }
 
 .personaje-info p {
   font-size: 1.2em;
   line-height: 1.5;
+}
+
+.volver-btn {
+  display: inline-block;
+  color: #FFD700;
+  text-decoration: none;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+::-webkit-scrollbar{
+    width:auto;
+}
+
+::-webkit-scrollbar-track{
+    background: rgb(0, 0, 0);
+}
+::-webkit-scrollbar-thumb{
+    background:#FFD700;
+    border-radius: 15px;
+    border:#ffd900b2;
 }

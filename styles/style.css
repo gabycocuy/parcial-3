@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 body{
     margin: 0;
@@ -9,6 +10,7 @@ body{
     background: linear-gradient(to right, black, #FFEE00);
     font-family: "Albert Sans", Arial, Helvetica, sans-serif, "bangers";
     color: white;
+    overflow-x: hidden;
 }
 header{
     width: 100%;
@@ -111,4 +113,32 @@ button:hover {
 .image img {
     width: 1000px;
     
+}
+
+.personaje {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  width: 200px;
+  background-color: #111;
+  color: white;
+}
+.personaje img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar{
+    width:auto;
+}
+
+::-webkit-scrollbar-track{
+    background: rgb(0, 0, 0);
+}
+::-webkit-scrollbar-thumb{
+    background:#FFD700;
+    border-radius: 15px;
+    border:#ffd900b2;
 }
